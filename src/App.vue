@@ -1,5 +1,5 @@
 <script>
-import Whales from 'whal3sjs'
+import Whal3s from 'whal3sjs'
 
 export default {
   data() {
@@ -17,7 +17,7 @@ export default {
   },
   created() {
     // fetch on init
-    const whal3s = new Whales();
+    const whal3s = new Whal3s();
     this.utility = whal3s.getUtility('46162418-800b-4487-a77d-04f6a5fc22dd')
     this.utility.init()
     this.utility.addEventListener('initialized', () => this.log.push('initialized'))
