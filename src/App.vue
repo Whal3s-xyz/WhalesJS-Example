@@ -18,18 +18,21 @@ export default {
   created() {
     // fetch on init
     const whal3s = new Whales();
-    this.utility = whal3s.getUtility('ab2c1796-7e27-4810-bc84-326b7d6decf3')
+    this.utility = whal3s.getUtility('46162418-800b-4487-a77d-04f6a5fc22dd')
     this.utility.init()
     this.utility.addEventListener('initialized', () => this.log.push('initialized'))
     this.utility.addEventListener('initializationFailed', () => this.log.push('initializationFailed'))
     this.utility.addEventListener('dispatch', () => this.log.push('dispatch'))
+    this.utility.addEventListener('networkSwitch', () => this.log.push('networkSwitch'))
     this.utility.addEventListener('networkSwitchFailed', () => this.log.push('networkSwitchFailed'))
     this.utility.addEventListener('sending', () => this.log.push('sending'))
     this.utility.addEventListener('sent', () => this.log.push('sent'))
     this.utility.addEventListener('transactionHash', (transactionHash) => this.log.push('transactionHash: ' + transactionHash))
     this.utility.addEventListener('confirmation', (data) => this.log.push('confirmation: ' + data.receipt))
     this.utility.addEventListener('error', (error) => this.log.push('error: ' + error.message))
-    this.utility.addEventListener('done', (transactionHash) => this.log.push('error: ' + transactionHash))
+    this.utility.addEventListener('done', (transactionHash) => this.log.push('done: ' + transactionHash))
+    this.utility.addEventListener('estimateGasError', () => this.log.push("Cannot estimate gas. Maybe token balance to low."))
+    this.utility.addEventListener('gasPriceError', () => this.log.push("Cannot fetch gas price"))
 
     this.fetchEngagements()
 
@@ -44,11 +47,16 @@ export default {
     async connectWallet() {
       await this.utility.connectWallet()
           .catch(function (error) {
-            console.log(error)
+            console.log({error: error})
           })
     },
     async triggerTransaction() {
-      this.utility.performAction()
+      this.utility.performAction().catch(function (error) {
+        console.log(error.code)
+        if (error.code === 3)
+          alert('Not enough token')
+        console.log(error)
+      })
     },
 
     async fetchEngagements() {
