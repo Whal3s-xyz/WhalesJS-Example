@@ -18,7 +18,7 @@ export default {
   created() {
     // fetch on init
     const whal3s = new Whal3s();
-    this.utility = whal3s.getUtility('46162418-800b-4487-a77d-04f6a5fc22dd')
+    this.utility = whal3s.getUtility('0925733e-3b31-4be9-8f84-cb43cf8ea73e')
     this.utility.init()
     this.utility.addEventListener('initialized', () => this.log.push('initialized'))
     this.utility.addEventListener('initializationFailed', () => this.log.push('initializationFailed'))

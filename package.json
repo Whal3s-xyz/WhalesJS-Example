@@ -21,7 +21,7 @@
     "url": "^0.11.0",
     "vue": "^3.2.13",
     "webpack": "^5.74.0",
-    "whal3sjs": "0.3.1"
+    "whal3sjs": "0.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
